@@ -1,10 +1,13 @@
-<div>
-<form action="" >
-email <input type="text" name="userEmail" id="userEmail"><br>
-password<input type="password" name="userPassword" id="userPassword"><br>
-type chatroom name<input type="text" name="chatroomName" id="chatroomName">
-<input type="submit" value="Submit">
-</form> 
-
-
+<div style="text-align: center">
+  <%= form_for @user do |f| %>
+    <%= f.label :email %>
+    <%= f.text_field :email%>
+    <br>
+    <%= f.label :password %>
+    <%= f.password_field :password%>
+    <br>
+    <%= label_tag :chatroomname %>
+    <%= text_field_tag :chatroomname%>
+    <%= f.submit %>
+  <% end %>
 </div>
