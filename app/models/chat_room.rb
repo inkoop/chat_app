@@ -8,7 +8,6 @@ class ChatRoom < ActiveRecord::Base
     chatroom_details = ChatRoom.find_by_name(chatroom)
     if chatroom_details.nil? #if the chatroom is not available 
       return create_room(chatroom, user)
-          # puts "user is enter into a searched and newly created chat room redirect to the new room" 
     else                                    #if the chatroom is available 
       if chatroom_details.is_public #if the search room name is public
           puts "user is enter into a searched and existing chat room redirect to the room"

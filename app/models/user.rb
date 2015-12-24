@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
 	def self.authendicateuser(userparam, chatroom)
     #puts userparam[:email]
     #puts chatroom
-		user_details = User.find_by_email(userparam[:email])
-    if user_details.nil?
+		@user = User.find_by_email(userparam[:email])
+    if @user.nil?
       @user = User.new
       @user.email = userparam[:email]
       @user.password = userparam[:password] 
@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
       end
     else
       puts "User already exist"
-      if user_details.password == userparam[:password] 
+      if @user.password == userparam[:password] 
         puts "Useremail and password is correct valid user"
         chat = ChatRoom.search_room(chatroom, @user)
         if chat
@@ -33,7 +33,6 @@ class User < ActiveRecord::Base
         end
       else
         puts "incorrect email and password"
-        #redirect to the index page
         return [nil, nil]
       end
     end
