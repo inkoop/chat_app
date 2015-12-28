@@ -1,0 +1,16 @@
+<h1>welcome to chat room <%= @chatroom.name %> </h1>
+
+<div style="text-align: center">
+
+  <% @old_message.each do |m| %>
+	   <li id="<%= m.id %>"> <%= m.content %> <small><%= m.time %></small> </li>
+  <% end %>
+
+  <%= form_for @message do |f| %>
+    <%= f.label :content %>
+    <%= f.text_field :content%>
+    <%= hidden_field_tag 'chat_room_id', params[:id] %>
+    <%= f.submit %>
+  <% end %>
+ 
+</div>

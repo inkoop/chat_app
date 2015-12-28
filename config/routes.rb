@@ -8,9 +8,11 @@ Rails.application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   root 'login#index'   
-  post 'login/check'
+  #post 'login/check'
   
   resources :users
+  resources :rooms
+  resources :messages
 
   #get "login/authendication"
   
