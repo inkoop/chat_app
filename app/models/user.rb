@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
       @user.email = userparam[:email]
       @user.password = userparam[:password] 
       if @user.save 
-        puts "User has been created"
+        #puts "User has been created"
         chat = ChatRoom.search_room(chatroom, @user)
         if chat
           return [@user, chat]
@@ -22,9 +22,9 @@ class User < ActiveRecord::Base
         end
       end
     else
-      puts "User already exist"
+      #puts "User already exist"
       if @user.password == userparam[:password] 
-        puts "Useremail and password is correct valid user"
+        #puts "Useremail and password is correct valid user"
         chat = ChatRoom.search_room(chatroom, @user)
         if chat
           return [@user, chat]
@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
           return [@user, nil]
         end
       else
-        puts "incorrect email and password"
+        #puts "incorrect email and password"
         return [nil, nil]
       end
     end

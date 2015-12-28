@@ -10,11 +10,11 @@ class ChatRoom < ActiveRecord::Base
       return create_room(chatroom, user)
     else                                    #if the chatroom is available 
       if chatroom_details.is_public #if the search room name is public
-          puts "user is enter into a searched and existing chat room redirect to the room"
+          #puts "user is enter into a searched and existing chat room redirect to the room"
           return chatroom_details
       else                                  #if the search room name is not public(private)
           #check the user details 
-          puts "it is private chat room"
+          #puts "it is private chat room"
           if user.chat_rooms.find_by id: chatroom_details.id
             return chatroom_details  
           else
