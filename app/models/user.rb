@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 	def self.authendicateuser(userparam, chatroom)
     #puts userparam[:email]
     #puts chatroom
+    is_new = false
 		@user = User.find_by_email(userparam[:email])
     if @user.nil?
       @user = User.new
@@ -14,7 +15,8 @@ class User < ActiveRecord::Base
       @user.password = userparam[:password] 
       if @user.save 
         #puts "User has been created"
-        chat = ChatRoom.search_room(chatroom, @user)
+        is_new = true
+        chat = ChatRoom.search_room(chatroom, @user, is_new)
         if chat
           return [@user, chat]
         else
@@ -25,7 +27,7 @@ class User < ActiveRecord::Base
       #puts "User already exist"
       if @user.password == userparam[:password] 
         #puts "Useremail and password is correct valid user"
-        chat = ChatRoom.search_room(chatroom, @user)
+        chat = ChatRoom.search_room(chatroom, @user, is_new)
         if chat
           return [@user, chat]
         else

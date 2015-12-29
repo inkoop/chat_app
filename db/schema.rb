@@ -11,14 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222132421) do
+ActiveRecord::Schema.define(version: 20151229062515) do
 
   create_table "chat_rooms", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.boolean  "is_public"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "token",      limit: 255
   end
+
+  add_index "chat_rooms", ["token"], name: "index_chat_rooms_on_token", using: :btree
 
   create_table "invites", force: :cascade do |t|
     t.string   "email",        limit: 255

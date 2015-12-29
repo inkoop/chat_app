@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       flash[:notice] = "user is valid"
       session[:current_user_id] = @user.id
       session[:current_room_id] = @room.id
-      redirect_to room_path  :id => @room.id    #rooms_path or rooms_url
+      redirect_to room_path  :id => @room.token    #rooms_path or rooms_url
 
     elsif !@user.nil? and @room.nil? 
       #render :text => "user is not access to private room"

@@ -1,16 +1,62 @@
 <h1>welcome to chat room <%= @chatroom.name %> </h1>
 
 <div style="text-align: center">
+  <div>
+    User Chat Room list
+    <%user = User.find(session[:current_user_id])
+      user_chat_rooms = user.chat_rooms.all
+      user_chat_rooms.each do |room| %>
+      <li><%= room.name %></li>
+    <% end %>
+  </div>
 
-  <% @old_message.each do |m| %>
-	   <li id="<%= m.id %>"> <%= m.content %> <small><%= m.time %></small> </li>
-  <% end %>
+  <div id="messages">
+    <ul>
+      <% @old_message.each do |m| %>
+        <li> <%= m.content %> <small><%= m.time %></small> </li>
+      <% end %>
+    </ul>
+  </div>
 
-  <%= form_for @message do |f| %>
+  <%= form_for @message do |f|  %>
     <%= f.label :content %>
     <%= f.text_field :content%>
-    <%= hidden_field_tag 'chat_room_id', params[:id] %>
+    <%= hidden_field_tag 'chat_room_token', params[:id] %>
+    <%= hidden_field_tag 'chat_room_id', @chatroom.id %>
     <%= f.submit %>
   <% end %>
- 
+  
+  <div id="chat"> hello static </div>
+
+  <script type="text/javascript">
+    PrivatePub.subscribe("/rooms/<%=params[:id]%>", function(data, channel) {
+      $("#chat").append(data.message_content);
+    });
+  </script>
+ 	
+  <script>
+
+    $( "#new_message" ).submit(function( event ) {
+
+      new_message = $("#message_content").val();
+      room_id = $("#chat_room_id").val();
+      room_token = $("#chat_room_token").val();
+
+      $.ajax({
+        url: "/messages",
+        type: "POST",
+        data: { message: {content: new_message}, chat_room_token: room_token, chat_room_id: room_id,"authenticity_token": "<%= form_authenticity_token %>"  },
+        complete: function() {},
+        success: function(){},
+        error: function() {
+          alert("Ajax error!")
+        }
+      });
+
+      alert( "Handler for .submit() called." );
+      event.preventDefault();
+    });
+   
+  </script>
+
 </div>
