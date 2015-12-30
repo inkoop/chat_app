@@ -9,6 +9,21 @@
 </head>
 <body>
 <%= flash[:notice] %>
+
+    
+<%= nav_bar brand: "Caht app" do %>
+
+  <%if session[:current_user_id]%>
+    <%= menu_group pull: :right do %>
+      <%= drop_down "Chat Rooms" do %>
+        <% @user_chat_rooms.each do |room| %>
+          <%= menu_item "#{room.name}", room_path(room.token)%>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <%= yield %>
 
 </body>

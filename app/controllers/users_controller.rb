@@ -6,7 +6,6 @@ class UsersController < ApplicationController
       #render :text => "user is valid"
       flash[:notice] = "user is valid"
       session[:current_user_id] = @user.id
-      session[:current_room_id] = @room.id
       redirect_to room_path  :id => @room.token    #rooms_path or rooms_url
 
     elsif !@user.nil? and @room.nil? 
@@ -23,5 +22,12 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
   end	
+
+  def destroy
+    session[:current_user_id] = nil
+    @user = nil
+    redirect_to root_path
+  end
+  
 
 end

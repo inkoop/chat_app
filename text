@@ -1,0 +1,32 @@
+<li>
+          <div id="messgae">
+            <div id="messagebody">
+              <span id="content">
+                <%= m.content %>
+              </span>
+              <span id="time">
+                <%= m.time %>
+              </span> 
+            </div> 
+            <div id="sender">
+              <span id="from">
+                
+              </span>
+            </div>
+          </div>
+        </li>
+
+
+#if the user is nil
+<%= nav_bar fixed: :top, brand: "Caht app" do %>
+  <% session[:current_user_id] = "hel"
+    if session[:current_user_id] %>
+    <%= menu_group do %>
+      <%= menu_item "Home", root_path %>
+      <%= menu_item "About Us"%>
+      <%= menu_item "Contact"%>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= link_to "logout", :controller=> "users", :action=> "destroy", :id =>session[:current_user_id] %>

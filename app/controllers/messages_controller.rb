@@ -1,13 +1,11 @@
 class MessagesController < ApplicationController
 	def create
     message = Message.newmessage(params[:message][:content], session[:current_user_id], params[:chat_room_id]) 
-    
-    PrivatePub.publish_to "/rooms/"+params[:chat_room_token], :message_content => message.content
-    #if message
-      #flash[:notice] = "message posted"
-      #redirect_to room_path  :id => params[:chat_room_token]
+    user_name = message.user.email
+    user_id = message.user.id
+    if message
       #publish new message
-      
-    #end
+      PrivatePub.publish_to "/rooms/"+params[:chat_room_token], :message_content => message.content, :time => message.time, :from => user_name, :user_id => user_id
+    end
 	end
 end

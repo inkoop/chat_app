@@ -1,15 +1,7 @@
 <h1>welcome to chat room <%= @chatroom.name %> </h1>
 
-<div style="text-align: center">
-  <div>
-    User Chat Room list
-    <%user = User.find(session[:current_user_id])
-      user_chat_rooms = user.chat_rooms.all
-      user_chat_rooms.each do |room| %>
-      <li><%= room.name %></li>
-    <% end %>
-  </div>
-
+<div>
+  
   <div id="messages">
     <ul>
       <% @old_message.each do |m| %>
@@ -26,14 +18,47 @@
     <%= f.submit %>
   <% end %>
   
-  <div id="chat"> hello static </div>
+  <div class="row text-center">
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#invitemodal">Invitte people</a>
+  </div>
+
+  <div class="modal fade" id="invitemodal" tabindex="-1" role="dialog" aria-labelledby="invitemodal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="invitemodal">Invite people</h4>
+        </div>
+        <div class="modal-body">
+          
+          <%= form_for @invite do |f|  %>
+            <div class="form-group">
+              <%= f.label :email, "Email id of the person", class: "control-label"%>
+              <%= f.text_field :email, class: "form-control"%>
+              <%= hidden_field_tag 'chat_room_token', params[:id] %>
+              <%= hidden_field_tag 'chat_room_id', @chatroom.id %>
+              <br/>
+              <%= f.submit "Invite", class: "col-md-offset-10 btn btn-primary"%>
+            </div>
+          <% end %>        
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
 
   <%= subscribe_to "/rooms/#{params[:id]}" %>
 
   <script type="text/javascript">
     PrivatePub.subscribe("/rooms/<%=params[:id]%>", function(data, channel) {
       console.log(data)
-      $("#chat").append(data.message_content);
+      
+      $("#messages ul").append(
+        $("<li>").append(data.message_content)
+      );
+      $("#message_content").val('');
+      
     });
   </script>
  	

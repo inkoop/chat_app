@@ -3,5 +3,6 @@ class RoomsController < ApplicationController
     @message = Message.new
     @chatroom = ChatRoom.find_by_token(params[:id])
     @old_message = @chatroom.messages.all
+    @invite = Invite.new
   end
 end

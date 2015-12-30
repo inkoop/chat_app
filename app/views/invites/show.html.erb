@@ -1,0 +1,12 @@
+<%= @valid_invite.inspect  %>
+
+<%=form_tag(set_password_invites_path) do%>
+
+  <%= label_tag 'password', 'Password' %>
+  <%= password_field_tag 'password' %>
+  <%= hidden_field_tag 'email', @valid_invite.email %>
+  <%= hidden_field_tag 'chat_room_id', @valid_invite.chat_room_id %>
+  <%= hidden_field_tag 'invite_token', params[:id]%>
+  <%= submit_tag "log in" %>
+
+<% end %>
