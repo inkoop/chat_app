@@ -28,8 +28,11 @@
   
   <div id="chat"> hello static </div>
 
+  <%= subscribe_to "/rooms/#{params[:id]}" %>
+
   <script type="text/javascript">
     PrivatePub.subscribe("/rooms/<%=params[:id]%>", function(data, channel) {
+      console.log(data)
       $("#chat").append(data.message_content);
     });
   </script>
@@ -49,11 +52,9 @@
         complete: function() {},
         success: function(){},
         error: function() {
-          alert("Ajax error!")
+          alert("ajax call error")
         }
       });
-
-      alert( "Handler for .submit() called." );
       event.preventDefault();
     });
    

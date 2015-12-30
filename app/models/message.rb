@@ -9,6 +9,7 @@ class Message < ActiveRecord::Base
     @message.user_id = user_id
     @message.chat_room_id = chat_room_id
     @message.save
+    @message
   end
   
 end
