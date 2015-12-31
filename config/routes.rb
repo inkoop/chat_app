@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :users
   resources :rooms
   resources :messages
+  resources :uploadfiles
   resources :invites do
     post :set_password, on: :collection
   end

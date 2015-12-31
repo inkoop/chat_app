@@ -4,6 +4,9 @@ class InvitesController < ApplicationController
     @invite = Invite.invitepeople(params[:invite][:email],params[:chat_room_id])
 #    @chatroom.name name is send through email
     @link = "http://localhost:3000/invites/#{@invite.token}"
+    
+    InviteMailer.invite_mail(@invite.email, @link, params[:chat_room_name]).deliver_later
+
     puts @link
     flash[:notice] = "Invitation sent"
     redirect_to room_path  :id => params[:chat_room_token]

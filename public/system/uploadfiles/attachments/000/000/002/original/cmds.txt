@@ -1,0 +1,106 @@
+:::: ActiveRecord basics ::::
+rails new blog
+
+rake db:create
+
+rails generate model Post title:string body:text
+
+rake db:migrate
+
+rails console
+
+irb>Post
+
+irb>Post.create(title: "Hello world!", body: "This is my awesome blog post")
+
+irb>exit
+
+rails s #restart server
+
+rails generate controller Posts
+
+add new file to app/views/posts/index.html.erb
+
+routes.rb
+#add it
+resources :posts
+
+:: Mdoeling ::
+:: Migrations and relationships ::
+
+rails new biller -d mysql
+
+rake db:create # it'll create db in mysql
+root
+
+mysql -u root -p
+root
+
+show databases;
+use db;
+
+rails generate model Customer
+
+rake db:migrate
+
+rake -T
+
+rails generate migration add_emil_address # first_name:string last_name:string
+
+rake db:rollback
+
+rails generate model TimeEntry
+
+rails generate model Employee
+
+Customer.create(name: "yogesh", email: "yo@gmail.com")
+
+rails generate model Account
+
+rails generate controller acounts
+
+rails generate migration type_field
+
+#reference 
+rails generate model UserChatRoom user:references chat_room:references 
+
+:: validation ::
+validates :name, presence: true, length: {in: 1..70}
+
+validates_associated :account
+
+e.errors
+e.valid?
+
+validates :time, numericality: {greater_than: 0, less_than: 25}
+
+validates :name, presence: true, length: {in: 1..70, message: "use a name."}, uniqueness: true
+
+
+
+:: query Interface ::
+Customer.where("name LIKE ?", "h%")
+Customer.where("name < ?", 30)
+Customer.where("name = ?", 30)
+Customer.where(name:, "ram")
+Customer.where(name:, "ram").limit(5)
+Customer.where(name:, "ram").limit(5).offset(5)
+
+Customer.find_batch{ |x| nil}
+
+scope :newest, -> { order("created_at DESC")}
+
+
+:: callback chain ::
+after_validation
+
+before_validate :ensure_password_exists
+
+def ensure_password_exists
+  self.password ||= SecureRandom.urlsafe_base64
+end
+
+rails generate migration add_money
+
+faker
+paper_trail

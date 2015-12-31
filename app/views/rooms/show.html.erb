@@ -22,6 +22,28 @@
     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#invitemodal">Invitte people</a>
   </div>
 
+  <div id="user list">
+    <ul>
+      <% @old_user_id.each do |u| %>
+          <li> <%= u.user_id %> </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div id="uploaded_files">
+    <ul>
+      <% @old_upload_files.each do |f| %>
+          <li> <a href="<%= f.attachment.url %>"><%= f.attachment_file_name %></a> </li>
+      <% end %>
+    </ul>
+  </div>
+
+
+  <div class="row text-center">
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#uploadmodal">Upload File</a>
+  </div>
+
+<!-- Invite people model-->
   <div class="modal fade" id="invitemodal" tabindex="-1" role="dialog" aria-labelledby="invitemodal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -37,8 +59,35 @@
               <%= f.text_field :email, class: "form-control"%>
               <%= hidden_field_tag 'chat_room_token', params[:id] %>
               <%= hidden_field_tag 'chat_room_id', @chatroom.id %>
+              <%= hidden_field_tag 'chat_room_name', @chatroom.name %>
               <br/>
               <%= f.submit "Invite", class: "col-md-offset-10 btn btn-primary"%>
+            </div>
+          <% end %>        
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Upload files model-->
+<div class="modal fade" id="uploadmodal" tabindex="-1" role="dialog" aria-labelledby="uploadmodal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="uploadmodal">Invite people</h4>
+        </div>
+        <div class="modal-body">
+          <%= form_for @uploadfile, :html => { :multipart => true} do |f|  %>
+            <div class="form-group">
+              <%= f.label :attachment, "Email id of the person", class: "control-label"%>
+              <%= f.file_field :attachment, class: "form-control"%>
+              <%= hidden_field_tag 'user_id', session[:current_user_id] %>
+              <%= hidden_field_tag 'chat_room_token', params[:id] %>
+              <%= hidden_field_tag 'chat_room_id', @chatroom.id %>
+              <%= hidden_field_tag 'chat_room_name', @chatroom.name %>
+              <br/>
+              <%= f.submit "Upload", class: "col-md-offset-10 btn btn-primary"%>
             </div>
           <% end %>        
         </div>
