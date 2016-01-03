@@ -1,7 +1,6 @@
 <h1>welcome to chat room <%= @chatroom.name %> </h1>
 
 <div>
-  
   <div id="messages">
     <ul>
       <% @old_message.each do |m| %>
@@ -22,15 +21,19 @@
     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#invitemodal">Invitte people</a>
   </div>
 
+
   <div id="user list">
+  User list
     <ul>
-      <% @old_user_id.each do |u| %>
-          <li> <%= u.user_id %> </li>
+      <% @user_emails.each do |u| %>
+          <li> <%= u.email %> </li>
       <% end %>
     </ul>
   </div>
 
+
   <div id="uploaded_files">
+    Uploaded files
     <ul>
       <% @old_upload_files.each do |f| %>
           <li> <a href="<%= f.attachment.url %>"><%= f.attachment_file_name %></a> </li>
@@ -38,9 +41,24 @@
     </ul>
   </div>
 
-
   <div class="row text-center">
     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#uploadmodal">Upload File</a>
+  </div>
+<br>
+  <div class="row text-center">
+    <%=form_tag(privateandpublic_markprivate_index_path) do%>
+      <%= check_box_tag 'is_public', 'false'%>
+      <% if @chatroom.is_public %>
+        <%= label_tag 'is_public', 'Mark as Private Chat Room' %>
+      <% else %>
+        <%= label_tag 'is_public', 'Mark as Public Chat Room' %>
+      <% end %>
+      <%= hidden_field_tag 'user_id', session[:current_user_id] %>
+      <%= hidden_field_tag 'chat_room_token', params[:id] %>
+      <%= hidden_field_tag 'chat_room_id', @chatroom.id %>
+      <%= hidden_field_tag 'chat_room_name', @chatroom.token %>
+      <%= submit_tag "Change Privacy", class: "btn btn-primary" %>
+    <% end %>
   </div>
 
 <!-- Invite people model-->
@@ -96,6 +114,21 @@
   </div>
 
   
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('input[type="checkbox"]').click(function(){
+            if($(this).is(":checked")){
+                $(this).val("true")
+                alert("Checkbox is checked.");
+                
+            }
+            else if($(this).is(":not(:checked)")){
+                $(this).val("false")
+                alert("Checkbox is unchecked.");
+            }
+        });
+    });
+  </script>
 
   <%= subscribe_to "/rooms/#{params[:id]}" %>
 

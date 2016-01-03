@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   resources :invites do
     post :set_password, on: :collection
   end
+  resources :markprivate do 
+    post :privateandpublic, on: :collection
+  end
 
   
   #get "login/authendication"

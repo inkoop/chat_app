@@ -42,4 +42,15 @@ class ChatRoom < ActiveRecord::Base
     user_chat_room = UserChatRoom.create(user_id: user.id, chat_room_id: @chatroom.id)
     @chatroom
   end
+
+  def self.changeprivacy(chat_room_id, privacy) 
+    
+
+    @chatroom = ChatRoom.find(chat_room_id)
+    if privacy 
+      @chatroom.update(is_public: !@chatroom.is_public)
+    end
+    @chatroom
+  end
+
 end
