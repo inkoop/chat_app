@@ -16,4 +16,5 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require private_pub
+//= require rails-timeago-all
 //= require_tree .

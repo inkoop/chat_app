@@ -12,12 +12,17 @@ Rails.application.routes.draw do
   #post 'login/check'
   
 
-  resources :users
+  resources :users do
+    get :logout, on: :collection
+  end
   resources :rooms
   resources :messages
   resources :uploadfiles
   resources :invites do
     post :set_password, on: :collection
+  end
+  resources :markprivate do 
+    post :privateandpublic, on: :collection
   end
 
   

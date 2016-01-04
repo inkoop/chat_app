@@ -1,14 +1,20 @@
 class RoomsController < ApplicationController
   def show
-    @message = Message.new
-    @chatroom = ChatRoom.find_by_token(params[:id])
-    @old_message = @chatroom.messages.all
-    @old_upload_files = @chatroom.uploadfiles.all
-    @old_user_id = @chatroom.user_chat_rooms.all
+    if session[:current_user_id]
+      @message = Message.new
+      @chatroom = ChatRoom.find_by_token(params[:id])
+      @old_message = @chatroom.messages.all
+      @old_upload_files = @chatroom.uploadfiles.all
+      @user_emails = @chatroom.users.all
+      
+      @invite = Invite.new
+      @uploadfile = Uploadfile.new
+    else
+      redirect_to root_path
+    end
+      
 
-        
-
-    @invite = Invite.new
-    @uploadfile = Uploadfile.new
   end
 end
+
+
