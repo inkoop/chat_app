@@ -32,6 +32,7 @@ gem "thin"
 gem "twitter-bootstrap-rails"
 
 gem "paperclip", "~> 4.3"
+gem 'unicorn'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -54,5 +55,8 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'capistrano', '~> 3.2.1'
+  gem 'capistrano-rbenv', '~> 2.0'
+  gem 'capistrano-rails', '~> 1.1.3'
+  gem 'capistrano-unicorn-nginx', '~> 3.2.0'
 end
-
