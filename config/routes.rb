@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   #post 'login/check'
   
 
-  resources :users
+  resources :users do
+    get :logout, on: :collection
+  end
   resources :rooms
   resources :messages
   resources :uploadfiles

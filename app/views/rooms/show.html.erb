@@ -4,7 +4,9 @@
   <div id="messages">
     <ul>
       <% @old_message.each do |m| %>
-        <li> <%= m.content %> <small><%= m.time %></small> </li>
+        <li> <%= m.content %> 
+          <small><%= timeago_tag m.time, :nojs => false, :limit => 10.days.ago %></small>
+        </li>
       <% end %>
     </ul>
   </div>
@@ -16,6 +18,7 @@
     <%= hidden_field_tag 'chat_room_id', @chatroom.id %>
     <%= f.submit %>
   <% end %>
+
   
   <div class="row text-center">
     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#invitemodal">Invitte people</a>
@@ -134,13 +137,12 @@
 
   <script type="text/javascript">
     PrivatePub.subscribe("/rooms/<%=params[:id]%>", function(data, channel) {
-      console.log(data)
-      
+      //console.log(data)
       $("#messages ul").append(
-        $("<li>").append(data.message_content)
-      );
+        $("<li>").append(data.message_content, 
+          $("<small>").append(" " + $.timeago(data.time))
+      ));
       $("#message_content").val('');
-      
     });
   </script>
  	

@@ -23,8 +23,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end	
 
-  def destroy
+  def logout
     session[:current_user_id] = nil
+    @chatroom = nil 
+    @room = nil
     @user = nil
     redirect_to root_path
   end

@@ -4,7 +4,8 @@
   <title>Chat</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"> </script>
+  
+
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -12,7 +13,6 @@
 
     
 <%= nav_bar brand: "Caht app" do %>
-
   <%if session[:current_user_id]%>
     <%= menu_group pull: :right do %>
       <%= drop_down "Chat Rooms" do %>
@@ -20,11 +20,16 @@
           <%= menu_item "#{room.name}", room_path(room.token)%>
         <% end %>
       <% end %>
+      <%= menu_item "logout", logout_users_path %>
     <% end %>
   <% end %>
 <% end %>
+
+
+
 
 <%= yield %>
 
 </body>
 </html>
+

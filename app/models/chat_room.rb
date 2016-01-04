@@ -1,28 +1,32 @@
 class ChatRoom < ActiveRecord::Base
 	has_many :user_chat_rooms 
-	has_many :user, :through => :user_chat_room
+	has_many :users, :through => :user_chat_rooms
 	has_many :messages
 	has_many :uploadfiles
 
   def self.search_room(chatroom, user, is_new)
-    chatroom_details = ChatRoom.find_by_name(chatroom)
-    if chatroom_details.nil? #if the chatroom is not available 
-      return create_room(chatroom, user)
-    else                                    #if the chatroom is available 
-      if chatroom_details.is_public #if the search room name is public
-        if is_new                   #new user enters into old room
-          user_chat_room = UserChatRoom.create(user_id: user.id, chat_room_id: chatroom_details.id)
-        end
-        return chatroom_details
-      else                                  #if the search room name is not public(private)
-          if user.chat_rooms.find_by id: chatroom_details.id            #check the user details 
-            return chatroom_details  
-          else
-            return nil
+    if chatroom.present?
+      chatroom_details = ChatRoom.find_by_name(chatroom)
+      if chatroom_details.nil? #if the chatroom is not available 
+        return create_room(chatroom, user)
+      else                                    #if the chatroom is available 
+        if chatroom_details.is_public #if the search room name is public
+          if is_new                   #new user enters into old room
+            user_chat_room = UserChatRoom.create(user_id: user.id, chat_room_id: chatroom_details.id)
           end
-          
-      end
-    end     
+          return chatroom_details
+        else                                  #if the search room name is not public(private)
+            if user.chat_rooms.find_by id: chatroom_details.id            #check the user details 
+              return chatroom_details  
+            else
+              return nil
+            end
+        end
+      end     
+    else
+      return user.chat_rooms.first
+    end
+    
   end
 
   def self.create_room(chatroom, user) 
